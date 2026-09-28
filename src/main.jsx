@@ -55,11 +55,13 @@ function RevealPortrait(){
    onPointerCancel={leave}
    onPointerLeave={leave}
  >
-   <img className="human" src="/images/ChatGPT Image Sep 28, 2026, 08_56_10 PM-1.png" alt="Rajkumar"/>
-   <div className="robotReveal" aria-hidden="true"><img className="robot" src="/images/ChatGPT Image Sep 28, 2026, 08_56_11 PM-2.png" alt=""/></div>
-   <div className="waterCavity" aria-hidden="true"><i className="cavityShade"/><i className="cavityHighlight"/></div>
-   <div className="touchPool" aria-hidden="true"/>
-   <div className="waterRipples" aria-hidden="true"><i/><i/></div>
+   <div className="portraitVisual">
+     <img className="human" src="/images/ChatGPT Image Sep 28, 2026, 08_56_10 PM-1.png" alt="Rajkumar"/>
+     <div className="robotReveal" aria-hidden="true"><img className="robot" src="/images/ChatGPT Image Sep 28, 2026, 08_56_11 PM-2.png" alt=""/></div>
+     <div className="waterCavity" aria-hidden="true"><i className="cavityShade"/><i className="cavityHighlight"/></div>
+     <div className="touchPool" aria-hidden="true"/>
+     <div className="waterRipples" aria-hidden="true"><i/><i/></div>
+   </div>
    <span className="revealHint">PRESS / DRAG TO REVEAL</span>
  </div>
 }
