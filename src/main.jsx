@@ -2,7 +2,6 @@ import React,{useEffect,useRef,useState} from 'react';
 import{createRoot}from'react-dom/client';
 import{ArrowRight,Menu,Sun,Moon,Code2,Cloud,BrainCircuit,Cog}from'lucide-react';
 import'./styles.css';
-import loaderVideo from './loaderMicroVideo.js';
 
 
 function IntroLoader(){
@@ -40,15 +39,17 @@ function IntroLoader(){
    <video
      ref={videoRef}
      className="introDirectVideo"
-     src={loaderVideo}
      autoPlay
      muted
      playsInline
      preload="auto"
+     onLoadedData={e=>e.currentTarget.play().catch(()=>{})}
      onCanPlay={e=>e.currentTarget.play().catch(()=>{})}
      onError={finish}
      onEnded={finish}
-   />
+   >
+     <source src="/intro.mp4" type="video/mp4"/>
+   </video>
  </div>;
 }
 
