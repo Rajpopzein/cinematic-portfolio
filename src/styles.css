@@ -1125,6 +1125,7 @@ body.light-mode{
   inset:0;
   overflow:visible;
   pointer-events:none;
+  transform:translateY(-14px);
   -webkit-mask-image:linear-gradient(
     to bottom,
     #000 0%,
@@ -1169,6 +1170,7 @@ body.light-mode{
 
 @media(max-width:820px){
   .portraitVisual{
+    transform:translateY(-10px);
     -webkit-mask-image:linear-gradient(
       to bottom,
       #000 0%,
