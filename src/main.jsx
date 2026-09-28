@@ -16,8 +16,8 @@ function RevealPortrait(){
  const move=e=>{const r=ref.current.getBoundingClientRect();const t=e.touches?.[0]||e;setP({x:(t.clientX-r.left)/r.width*100,y:(t.clientY-r.top)/r.height*100,active:true})};
  const vars={'--x':p.x+'%','--y':p.y+'%','--scale':p.active?1:0};
  return <div ref={ref} className="portrait" onMouseMove={move} onMouseLeave={()=>setP(v=>({...v,active:false}))} onTouchStart={move} onTouchMove={move}>
-   <img className="human" src="/images/human.png" alt="Rajkumar"/>
-   <img className="robot" src="/images/robot.png" alt="" style={vars}/>
+   <img className="human" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=1200&q=85" alt="Rajkumar"/>
+   <img className="robot" src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=1200&q=85" alt="" style={vars}/>
    <div className="liquidEdge" style={vars}/>
    <div className="liquidDroplet d1" style={vars}/><div className="liquidDroplet d2" style={vars}/><div className="liquidDroplet d3" style={vars}/>
    <span className="revealHint">MOVE / DRAG TO REVEAL</span>
