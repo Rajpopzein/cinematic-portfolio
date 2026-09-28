@@ -987,3 +987,52 @@ body.light-mode{
   .robotReveal{filter:blur(.35px)}
   .robotReveal .robot{transform:scaleY(1)}
 }
+
+
+/* Cut the human portrait away under the robot reveal.
+   This prevents skin/shirt pixels from showing through transparent robot details. */
+.waterPortrait.is-revealing .human{
+  -webkit-mask-repeat:no-repeat;
+  mask-repeat:no-repeat;
+  -webkit-mask-image:
+    radial-gradient(
+      ellipse calc(var(--reveal-radius) * 1.08) calc(var(--reveal-radius) * .91) at var(--x) var(--y),
+      transparent 0 57%,
+      rgba(0,0,0,.08) 68%,
+      rgba(0,0,0,.30) 79%,
+      rgba(0,0,0,.76) 90%,
+      #000 100%
+    );
+  mask-image:
+    radial-gradient(
+      ellipse calc(var(--reveal-radius) * 1.08) calc(var(--reveal-radius) * .91) at var(--x) var(--y),
+      transparent 0 57%,
+      rgba(0,0,0,.08) 68%,
+      rgba(0,0,0,.30) 79%,
+      rgba(0,0,0,.76) 90%,
+      #000 100%
+    );
+}
+
+/* Keep the robot reveal slightly larger than the erased human pocket
+   so there is no halo of the normal portrait around the opening. */
+.robotReveal{
+  -webkit-mask-image:
+    radial-gradient(
+      ellipse calc(var(--reveal-radius) * 1.12) calc(var(--reveal-radius) * .95) at var(--x) var(--y),
+      #000 0 61%,
+      rgba(0,0,0,.98) 71%,
+      rgba(0,0,0,.78) 82%,
+      rgba(0,0,0,.30) 92%,
+      transparent 100%
+    )!important;
+  mask-image:
+    radial-gradient(
+      ellipse calc(var(--reveal-radius) * 1.12) calc(var(--reveal-radius) * .95) at var(--x) var(--y),
+      #000 0 61%,
+      rgba(0,0,0,.98) 71%,
+      rgba(0,0,0,.78) 82%,
+      rgba(0,0,0,.30) 92%,
+      transparent 100%
+    )!important;
+}
