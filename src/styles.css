@@ -1809,3 +1809,159 @@ body.light-mode{
   .contactFooter::after,
   .footerStack i{animation:none!important}
 }
+
+
+/* CINEMATIC VIDEO INTRO — app remains rendered and interactive underneath */
+.introLoader{
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  display:grid;
+  place-items:center;
+  overflow:hidden;
+  background:rgba(5,5,4,.96);
+  opacity:1;
+  visibility:visible;
+  pointer-events:none;
+  transition:opacity .7s cubic-bezier(.22,.61,.36,1),visibility .7s ease;
+}
+.introLoader::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:
+    linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);
+  background-size:48px 48px;
+  -webkit-mask-image:radial-gradient(circle at 50% 50%,#000,transparent 73%);
+  mask-image:radial-gradient(circle at 50% 50%,#000,transparent 73%);
+}
+.introLoader.leaving{
+  opacity:0;
+  visibility:hidden;
+}
+.introLoaderGlow{
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:min(88vw,920px);
+  aspect-ratio:1.65;
+  transform:translate(-50%,-50%);
+  border-radius:50%;
+  pointer-events:none;
+  background:radial-gradient(circle,rgba(228,178,77,.12),rgba(228,178,77,.035) 38%,transparent 72%);
+  filter:blur(24px);
+  animation:introGlow 4.8s ease-in-out infinite;
+}
+.introVideoFrame{
+  position:relative;
+  width:min(72vw,660px);
+  aspect-ratio:16/9;
+  display:grid;
+  place-items:center;
+  overflow:hidden;
+  border-radius:22px;
+  background:#050504;
+  box-shadow:
+    0 38px 90px rgba(0,0,0,.55),
+    0 0 0 1px rgba(228,178,77,.09);
+}
+.introVideoFrame::before{
+  content:"";
+  position:absolute;
+  z-index:2;
+  inset:0;
+  pointer-events:none;
+  border-radius:inherit;
+  box-shadow:inset 0 0 80px 24px rgba(5,5,4,.86);
+}
+.introVideoFrame::after{
+  content:"";
+  position:absolute;
+  z-index:3;
+  left:8%;
+  right:8%;
+  bottom:0;
+  height:1px;
+  background:linear-gradient(90deg,transparent,var(--accent,#e4b24d),transparent);
+  opacity:.55;
+  animation:introLine 3.6s ease-in-out infinite;
+}
+.introVideoFrame video{
+  width:100%;
+  height:100%;
+  display:block;
+  object-fit:cover;
+  filter:contrast(1.05) saturate(.96) brightness(.96);
+  transform:scale(1.018);
+}
+.introLoaderLabel{
+  position:absolute;
+  z-index:4;
+  left:50%;
+  bottom:5.5%;
+  transform:translateX(-50%);
+  color:rgba(245,240,230,.52);
+  font-size:8px;
+  font-weight:750;
+  letter-spacing:.30em;
+  white-space:nowrap;
+  text-shadow:0 2px 12px #000;
+}
+.introSkip{
+  position:absolute;
+  z-index:5;
+  right:24px;
+  bottom:22px;
+  min-height:36px;
+  padding:0 14px;
+  border:1px solid rgba(228,178,77,.24);
+  border-radius:999px;
+  background:rgba(10,10,8,.58);
+  color:rgba(245,240,230,.66);
+  backdrop-filter:blur(12px);
+  font-size:9px;
+  font-weight:700;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  cursor:pointer;
+  pointer-events:auto;
+  transition:border-color .22s ease,color .22s ease,background .22s ease,transform .22s ease;
+}
+.introSkip:hover{
+  color:#f5f0e6;
+  border-color:rgba(228,178,77,.48);
+  background:rgba(20,18,13,.76);
+  transform:translateY(-2px);
+}
+@keyframes introGlow{
+  0%,100%{opacity:.52;transform:translate(-50%,-50%) scale(.96)}
+  50%{opacity:.92;transform:translate(-50%,-50%) scale(1.05)}
+}
+@keyframes introLine{
+  0%,100%{opacity:.25;transform:scaleX(.58)}
+  50%{opacity:.75;transform:scaleX(1)}
+}
+
+@media(max-width:820px){
+  .introVideoFrame{
+    width:min(92vw,620px);
+    border-radius:16px;
+  }
+  .introLoaderLabel{
+    bottom:4.5%;
+    font-size:6.8px;
+    letter-spacing:.22em;
+  }
+  .introSkip{
+    right:16px;
+    bottom:16px;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  .introLoader{display:none!important}
+  .introLoaderGlow,
+  .introVideoFrame::after{animation:none!important}
+}
