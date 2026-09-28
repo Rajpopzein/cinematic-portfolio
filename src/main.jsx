@@ -1,4 +1,4 @@
-import React,{useEffect,useRef,useState} from 'react';
+import React,{useRef,useState} from 'react';
 import{createRoot}from'react-dom/client';
 import{ArrowRight,Menu,Sun,Moon,Code2,Cloud,BrainCircuit,Cog}from'lucide-react';
 import'./styles.css';
@@ -14,10 +14,12 @@ function RevealPortrait(){
  const ref=useRef(null);
  const [p,setP]=useState({x:72,y:42,active:false});
  const move=e=>{const r=ref.current.getBoundingClientRect();const t=e.touches?.[0]||e;setP({x:(t.clientX-r.left)/r.width*100,y:(t.clientY-r.top)/r.height*100,active:true})};
- return <div ref={ref} className="portrait" onMouseMove={move} onMouseLeave={()=>setP(v=>({...v,active:false}))} onTouchMove={move}>
+ const vars={'--x':p.x+'%','--y':p.y+'%','--scale':p.active?1:0};
+ return <div ref={ref} className="portrait" onMouseMove={move} onMouseLeave={()=>setP(v=>({...v,active:false}))} onTouchStart={move} onTouchMove={move}>
    <img className="human" src="/images/human.png" alt="Rajkumar"/>
-   <img className="robot" src="/images/robot.png" alt="" style={{'--x':p.x+'%','--y':p.y+'%','--r':p.active?'24%':'0%'}}/>
-   <div className="liquidGlow" style={{'--x':p.x+'%','--y':p.y+'%','--o':p.active?1:0}}/>
+   <img className="robot" src="/images/robot.png" alt="" style={vars}/>
+   <div className="liquidEdge" style={vars}/>
+   <div className="liquidDroplet d1" style={vars}/><div className="liquidDroplet d2" style={vars}/><div className="liquidDroplet d3" style={vars}/>
    <span className="revealHint">MOVE / DRAG TO REVEAL</span>
  </div>
 }
