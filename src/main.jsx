@@ -149,7 +149,31 @@ function App(){
     <article className="motion-item" style={{'--delay':'300ms'}}><small>FASTAPI · AZURE</small><h4>HelloHalfred</h4><p>Patient and doctor CRUD APIs deployed with Azure Functions and integrated with Azure SQL Database.</p></article>
    </div>
   </section>
-  <footer id="contact"><h3>Let's build something useful.</h3><p><a href="mailto:rajkumarrbtech@hotmail.com">rajkumarrbtech@hotmail.com</a> · <a href="https://github.com/Rajpopzein">GitHub</a> · <a href="https://www.linkedin.com/in/raj-kumar-39b403160">LinkedIn</a></p><p>RAJKUMAR © 2026</p></footer>
+  <footer id="contact" className="contactFooter">
+   <div className="footerTop motion-item">
+    <div className="footerLead">
+     <p className="eyebrow">LET'S CONNECT</p>
+     <h3>Have an idea?<br/>Let's build it.</h3>
+     <p>For product ideas, engineering collaborations, or interesting technical problems, send me a message.</p>
+    </div>
+    <div className="footerContact">
+     <a className="footerEmail" href="mailto:rajkumarrbtech@hotmail.com">
+      <span><small>EMAIL ME</small><strong>rajkumarrbtech@hotmail.com</strong></span>
+      <ArrowRight/>
+     </a>
+     <div className="footerLinks">
+      <a href="https://github.com/Rajpopzein" target="_blank" rel="noreferrer">GitHub <ArrowRight/></a>
+      <a href="https://www.linkedin.com/in/raj-kumar-39b403160" target="_blank" rel="noreferrer">LinkedIn <ArrowRight/></a>
+     </div>
+     <div className="footerStack"><i/><span>React · Python · AWS · FastAPI</span></div>
+    </div>
+   </div>
+   <div className="footerBottom">
+    <a className="footerMark" href="#"><b>R</b><span>RAJKUMAR</span></a>
+    <span>SOFTWARE DEVELOPER</span>
+    <span>© 2026</span>
+   </div>
+  </footer>
  </main>
 }
 createRoot(document.getElementById('root')).render(<App/>);
