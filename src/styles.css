@@ -887,3 +887,26 @@ footer p{color:var(--muted)}
       linear-gradient(145deg,rgba(255,255,255,.82),rgba(237,244,251,.34))
   }
 }
+
+
+/* Theme root sync — ensure the entire viewport changes, not only inner content */
+html,body{
+  background-color:#080807;
+  transition:background-color .35s ease
+}
+html.light-mode,
+body.light-mode{
+  background-color:#f7f9fc!important;
+  color-scheme:light
+}
+.site.light{
+  background-color:#f7f9fc!important;
+  background-image:
+    radial-gradient(circle at 53% 42%,rgba(10,118,237,.14) 0,rgba(10,118,237,.055) 22%,transparent 42%),
+    radial-gradient(circle at 84% 78%,rgba(10,118,237,.05),transparent 24%),
+    linear-gradient(120deg,#ffffff 0%,#f7f9fc 54%,#eef4fb 100%)!important;
+  background-attachment:scroll!important
+}
+.site.light .hero{
+  background:transparent!important
+}
