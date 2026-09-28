@@ -54,8 +54,8 @@ function RevealPortrait(){
    onPointerCancel={leave}
    onPointerLeave={leave}
  >
-   <img className="human" src="/images/human-placeholder.svg" alt="Rajkumar"/>
-   <img className="robot waterReveal" src="/images/robot-placeholder.svg" alt="" aria-hidden="true"/>
+   <img className="human" src="/images/C613DC2F-BD8C-4A39-AB40-70D16054D2CC.png" alt="Rajkumar"/>
+   <img className="robot waterReveal" src="/images/8912F2D5-F748-4584-B3D6-10D733690616.png" alt="" aria-hidden="true"/>
    <div className="waterCavity" aria-hidden="true"><i className="cavityShade"/><i className="cavityHighlight"/></div>
    <div className="touchPool" aria-hidden="true"/>
    <div className="waterRipples" aria-hidden="true"><i/><i/></div>
