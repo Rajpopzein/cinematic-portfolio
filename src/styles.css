@@ -910,3 +910,53 @@ body.light-mode{
 .site.light .hero{
   background:transparent!important
 }
+
+
+/* Portrait registration: keep the mask under the pointer while aligning both portraits */
+.robotReveal{
+  position:absolute;
+  inset:0;
+  z-index:2;
+  opacity:var(--reveal);
+  pointer-events:none;
+  -webkit-mask-repeat:no-repeat;
+  mask-repeat:no-repeat;
+  -webkit-mask-image:
+    radial-gradient(
+      ellipse calc(var(--reveal-radius) * 1.08) calc(var(--reveal-radius) * .91) at var(--x) var(--y),
+      #000 0 56%,
+      rgba(0,0,0,.98) 68%,
+      rgba(0,0,0,.76) 79%,
+      rgba(0,0,0,.28) 90%,
+      transparent 100%
+    );
+  mask-image:
+    radial-gradient(
+      ellipse calc(var(--reveal-radius) * 1.08) calc(var(--reveal-radius) * .91) at var(--x) var(--y),
+      #000 0 56%,
+      rgba(0,0,0,.98) 68%,
+      rgba(0,0,0,.76) 79%,
+      rgba(0,0,0,.28) 90%,
+      transparent 100%
+    );
+  transition:opacity .14s ease-out
+}
+
+/* The robot canvas is ~2.7% taller than the suit portrait at equal width.
+   Compress only its vertical axis from the bottom so hair/eyes/jaw register
+   without moving the water opening away from the finger. */
+.robotReveal .robot{
+  z-index:1;
+  object-fit:contain;
+  object-position:center bottom;
+  transform-origin:50% 100%;
+  transform:scaleY(.9735);
+  filter:brightness(calc(1 - var(--reveal) * .06)) saturate(1.04) contrast(1.035)
+}
+
+/* Disable the old mask/transform path now that masking lives on the wrapper. */
+.waterReveal{display:none!important}
+
+@media(max-width:820px){
+  .robotReveal .robot{transform:scaleY(.9735)}
+}
