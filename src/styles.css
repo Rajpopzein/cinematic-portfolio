@@ -511,7 +511,10 @@ aside{
 .section{
   max-width:1180px;
   margin:0 auto;
-  padding:110px 40px
+  padding:72px 40px
+}
+.section + .section{
+  padding-top:48px
 }
 .section h3,footer h3{
   margin:12px 0 27px;
@@ -689,7 +692,8 @@ footer p{color:var(--muted)}
   .skill:hover{transform:none}
   .skill>span:nth-child(2),.skill em{display:none}
   .icon{width:43px;height:43px}
-  .section{padding:78px 20px}
+  .section{padding:58px 20px}
+  .section + .section{padding-top:38px}
   .section h3,footer h3{font-size:clamp(44px,13vw,60px)}
   .section>p:last-child{font-size:14px}
   .projects{grid-template-columns:1fr;gap:12px;margin-top:28px}
