@@ -9,39 +9,46 @@ function IntroLoader(){
  const[visible,setVisible]=useState(true);
  const[leaving,setLeaving]=useState(false);
  const finishing=useRef(false);
+ const videoRef=useRef(null);
+
  const finish=()=>{
    if(finishing.current)return;
    finishing.current=true;
    setLeaving(true);
-   window.setTimeout(()=>setVisible(false),700);
+   window.setTimeout(()=>setVisible(false),500);
  };
 
  useEffect(()=>{
-   if(window.matchMedia?.('(prefers-reduced-motion: reduce)').matches){
-     setVisible(false);
-     return;
+   const video=videoRef.current;
+   if(video){
+     video.muted=true;
+     video.defaultMuted=true;
+     const start=()=>video.play().catch(()=>{});
+     start();
+     video.addEventListener('canplay',start,{once:true});
+     return()=>video.removeEventListener('canplay',start);
    }
-   const fallback=window.setTimeout(finish,7200);
+ },[]);
+
+ useEffect(()=>{
+   const fallback=window.setTimeout(finish,12000);
    return()=>window.clearTimeout(fallback);
  },[]);
 
  if(!visible)return null;
- return <div className={`introLoader${leaving?' leaving':''}`}>
-   <div className="introLoaderGlow" aria-hidden="true"/>
-   <div className="introVideoFrame">
-    <video
-      src={loaderVideo}
-      autoPlay
-      muted
-      playsInline
-      preload="auto"
-      aria-hidden="true"
-      onError={finish}
-      onEnded={finish}
-    />
-    <span className="introLoaderLabel">RAJKUMAR · BUILDING THE EXPERIENCE</span>
-   </div>
-   <button className="introSkip" type="button" onClick={finish}>Skip intro</button>
+ return <div className={`introLoader${leaving?' leaving':''}`} aria-hidden="true">
+   <video
+     ref={videoRef}
+     className="introDirectVideo"
+     src={loaderVideo}
+     autoPlay
+     muted
+     playsInline
+     preload="auto"
+     onCanPlay={e=>e.currentTarget.play().catch(()=>{})}
+     onError={finish}
+     onEnded={finish}
+   />
  </div>;
 }
 
