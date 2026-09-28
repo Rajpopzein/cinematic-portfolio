@@ -2,7 +2,7 @@ import React,{useEffect,useRef,useState} from 'react';
 import{createRoot}from'react-dom/client';
 import{ArrowRight,Menu,Sun,Moon,Code2,Cloud,BrainCircuit,Cog}from'lucide-react';
 import'./styles.css';
-import loaderVideo from './loader2/video.js';
+import loaderVideo from './loaderMicroVideo.js';
 
 
 function IntroLoader(){
@@ -31,7 +31,7 @@ function IntroLoader(){
  },[]);
 
  useEffect(()=>{
-   const fallback=window.setTimeout(finish,12000);
+   const fallback=window.setTimeout(finish,22000);
    return()=>window.clearTimeout(fallback);
  },[]);
 
