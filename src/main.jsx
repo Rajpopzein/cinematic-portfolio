@@ -2,6 +2,48 @@ import React,{useEffect,useRef,useState} from 'react';
 import{createRoot}from'react-dom/client';
 import{ArrowRight,Menu,Sun,Moon,Code2,Cloud,BrainCircuit,Cog}from'lucide-react';
 import'./styles.css';
+import loaderVideo from './loader2/video.js';
+
+
+function IntroLoader(){
+ const[visible,setVisible]=useState(true);
+ const[leaving,setLeaving]=useState(false);
+ const finishing=useRef(false);
+ const finish=()=>{
+   if(finishing.current)return;
+   finishing.current=true;
+   setLeaving(true);
+   window.setTimeout(()=>setVisible(false),700);
+ };
+
+ useEffect(()=>{
+   if(window.matchMedia?.('(prefers-reduced-motion: reduce)').matches){
+     setVisible(false);
+     return;
+   }
+   const fallback=window.setTimeout(finish,7200);
+   return()=>window.clearTimeout(fallback);
+ },[]);
+
+ if(!visible)return null;
+ return <div className={`introLoader${leaving?' leaving':''}`}>
+   <div className="introLoaderGlow" aria-hidden="true"/>
+   <div className="introVideoFrame">
+    <video
+      src={loaderVideo}
+      autoPlay
+      muted
+      playsInline
+      preload="auto"
+      aria-hidden="true"
+      onError={finish}
+      onEnded={finish}
+    />
+    <span className="introLoaderLabel">RAJKUMAR · BUILDING THE EXPERIENCE</span>
+   </div>
+   <button className="introSkip" type="button" onClick={finish}>Skip intro</button>
+ </div>;
+}
 
 const skills=[
  ['Frontend & Web','React · JavaScript · HTML/CSS',Code2],
@@ -107,7 +149,9 @@ function App(){
    const el=heroRef.current;if(!el)return;
    el.style.setProperty('--px','0');el.style.setProperty('--py','0');
  };
- return <main className={light?'site light':'site'}>
+ return <>
+  <IntroLoader/>
+  <main className={light?'site light':'site'}>
   <header><a className="brand" href="#"><b>R</b><span>RAJKUMAR</span></a><nav><a href="#about">About</a><a href="#work">Work</a><a href="#experiments">Experiments</a><a href="#contact">Contact</a></nav><div className="headActions"><button className="theme" onClick={()=>setLight(!light)} aria-label="Toggle theme">{light?<Moon/>:<Sun/>}</button><a className="connect" href="#contact">Let's Connect <ArrowRight/></a><Menu className="menu"/></div></header>
   <section ref={heroRef} className="hero" onPointerMove={moveParallax} onPointerLeave={resetParallax}>
    <div className="copy"><p className="eyebrow">HI, I'M</p><h1>RAJKUMAR</h1><h2>SOFTWARE DEVELOPER</h2><p className="intro">Software developer building React applications, backend APIs and AWS cloud solutions with Python, FastAPI and Express.js.</p><div className="cta"><a href="#work">View My Work <ArrowRight/></a><a className="ghost" href="#about">About Me</a></div><div className="stats"><div><b>React</b><span>Frontend</span></div><div><b>Python</b><span>Backend</span></div><div><b>AWS</b><span>Cloud</span></div><div><b>FastAPI</b><span>APIs</span></div></div></div>
@@ -175,5 +219,6 @@ function App(){
    </div>
   </footer>
  </main>
+ </>
 }
 createRoot(document.getElementById('root')).render(<App/>);
