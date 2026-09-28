@@ -60,3 +60,9 @@ header{animation:enterDown .8s .35s both}
 @keyframes enterUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}@keyframes enterDown{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:none}}@keyframes enterRight{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:none}}@keyframes portraitIn{from{opacity:0;transform:translateY(24px) scale(.97);filter:blur(8px)}to{opacity:1;transform:none;filter:blur(0)}}@keyframes portraitFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
 @media(max-width:850px){.loaderMark{font-size:60px}.human{animation:portraitFloat 7s 1.7s ease-in-out infinite}.skill:hover{transform:none}.projects article:hover{transform:none}}
 @media(prefers-reduced-motion:reduce){.loader{transition:none}.loaderMark,.loaderLine i,header,.copy .eyebrow,.copy h1,.copy h2,.copy .intro,.copy .cta,.copy .stats,.portrait,.human,.skill{animation:none!important}}
+
+/* Emergency-safe non-blocking entrance: never cover the viewport */
+.loader{display:none!important}
+.site{animation:siteReveal .9s ease both}
+@keyframes siteReveal{from{opacity:.01}to{opacity:1}}
+@media(prefers-reduced-motion:reduce){.site{animation:none!important}}
