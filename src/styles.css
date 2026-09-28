@@ -1116,3 +1116,64 @@ body.light-mode{
 @media(max-width:820px){
   .robotReveal{filter:blur(.5px)}
 }
+
+
+/* Feather the IMAGE DIV itself so rectangular crop edges disappear.
+   Reveal internals stay sharp; only the outer portrait container is blended. */
+.portraitVisual{
+  position:absolute;
+  inset:0;
+  overflow:visible;
+  pointer-events:none;
+  -webkit-mask-image:
+    radial-gradient(
+      ellipse 76% 94% at 50% 49%,
+      #000 0 78%,
+      rgba(0,0,0,.98) 82%,
+      rgba(0,0,0,.88) 86%,
+      rgba(0,0,0,.66) 90%,
+      rgba(0,0,0,.34) 95%,
+      transparent 100%
+    );
+  mask-image:
+    radial-gradient(
+      ellipse 76% 94% at 50% 49%,
+      #000 0 78%,
+      rgba(0,0,0,.98) 82%,
+      rgba(0,0,0,.88) 86%,
+      rgba(0,0,0,.66) 90%,
+      rgba(0,0,0,.34) 95%,
+      transparent 100%
+    );
+  -webkit-mask-repeat:no-repeat;
+  mask-repeat:no-repeat;
+}
+
+/* soft bottom blend where the portrait meets the hero */
+.portraitVisual::after{
+  content:"";
+  position:absolute;
+  z-index:20;
+  left:4%;
+  right:4%;
+  bottom:-1px;
+  height:11%;
+  pointer-events:none;
+  background:linear-gradient(to bottom,transparent,rgba(8,8,7,.72) 72%,var(--bg) 100%);
+  filter:blur(4px);
+  transform:translateZ(0);
+}
+
+.site.light .portraitVisual::after{
+  background:linear-gradient(to bottom,transparent,rgba(247,249,252,.76) 72%,#f7f9fc 100%);
+}
+
+@media(max-width:820px){
+  .portraitVisual{
+    -webkit-mask-image:
+      radial-gradient(ellipse 82% 95% at 50% 49%,#000 0 80%,rgba(0,0,0,.88) 88%,rgba(0,0,0,.44) 95%,transparent 100%);
+    mask-image:
+      radial-gradient(ellipse 82% 95% at 50% 49%,#000 0 80%,rgba(0,0,0,.88) 88%,rgba(0,0,0,.44) 95%,transparent 100%);
+  }
+  .portraitVisual::after{height:9%;filter:blur(3px)}
+}
