@@ -85,3 +85,89 @@ aside{will-change:transform;transform:translate3d(calc(var(--px) * 10px),calc(va
 @media(prefers-reduced-motion:reduce){
   .hero::before,.hero::after,.copy,.portrait,aside{transform:none!important;translate:none!important;transition:none!important}
 }
+
+/* water-touch reveal: small displaced pocket around the finger */
+.waterPortrait{--reveal-radius:68px}
+.waterReveal{
+  z-index:2;
+  clip-path:none!important;
+  opacity:var(--reveal);
+  -webkit-mask-repeat:no-repeat;
+  mask-repeat:no-repeat;
+  -webkit-mask-image:
+    radial-gradient(circle var(--reveal-radius) at var(--x) var(--y),#000 0 68%,rgba(0,0,0,.98) 76%,rgba(0,0,0,.55) 88%,transparent 100%),
+    radial-gradient(circle 19px at calc(var(--x) + 42px) calc(var(--y) - 18px),rgba(0,0,0,.9) 0 55%,transparent 100%),
+    radial-gradient(circle 14px at calc(var(--x) - 36px) calc(var(--y) + 25px),rgba(0,0,0,.76) 0 52%,transparent 100%);
+  mask-image:
+    radial-gradient(circle var(--reveal-radius) at var(--x) var(--y),#000 0 68%,rgba(0,0,0,.98) 76%,rgba(0,0,0,.55) 88%,transparent 100%),
+    radial-gradient(circle 19px at calc(var(--x) + 42px) calc(var(--y) - 18px),rgba(0,0,0,.9) 0 55%,transparent 100%),
+    radial-gradient(circle 14px at calc(var(--x) - 36px) calc(var(--y) + 25px),rgba(0,0,0,.76) 0 52%,transparent 100%);
+  filter:saturate(1.06) contrast(1.03) drop-shadow(0 0 10px color-mix(in srgb,var(--accent),transparent 60%));
+  transition:opacity .16s ease-out;
+}
+.waterPortrait .liquidEdge,.waterPortrait .liquidDroplet{display:none!important}
+.touchPool,.waterRipples{position:absolute;z-index:3;left:var(--x);top:var(--y);pointer-events:none}
+.touchPool{
+  width:calc(var(--reveal-radius) * 2.08);
+  height:calc(var(--reveal-radius) * 2.08);
+  transform:translate(-50%,-50%) scale(calc(.86 + var(--reveal) * .14));
+  border-radius:50%;
+  opacity:calc(var(--reveal) * .9);
+  border:1px solid color-mix(in srgb,var(--accent),white 12%);
+  background:
+    radial-gradient(circle at 34% 30%,rgba(255,255,255,.12),transparent 26%),
+    radial-gradient(circle at 62% 66%,color-mix(in srgb,var(--accent),transparent 82%),transparent 64%);
+  box-shadow:
+    inset 0 0 18px rgba(255,255,255,.05),
+    inset 0 0 28px color-mix(in srgb,var(--accent),transparent 84%),
+    0 0 14px color-mix(in srgb,var(--accent),transparent 78%);
+  animation:waterWobble 2.5s ease-in-out infinite;
+  transition:opacity .16s ease-out,transform .16s ease-out;
+}
+.touchPool::before,.touchPool::after{
+  content:"";position:absolute;border-radius:50%;pointer-events:none
+}
+.touchPool::before{
+  width:16px;height:16px;right:7%;top:11%;
+  background:rgba(255,255,255,.16);
+  filter:blur(.5px)
+}
+.touchPool::after{
+  width:9px;height:9px;left:10%;bottom:16%;
+  background:color-mix(in srgb,var(--accent),white 8%);
+  opacity:.38
+}
+.waterRipples{
+  width:1px;height:1px;
+  opacity:var(--reveal);
+  transition:opacity .16s ease-out
+}
+.waterRipples i{
+  position:absolute;left:0;top:0;border-radius:50%;
+  border:1px solid color-mix(in srgb,var(--accent),transparent 55%);
+  transform:translate(-50%,-50%);
+  animation:waterRipple 1.75s ease-out infinite
+}
+.waterRipples i:nth-child(2){animation-delay:.82s}
+@keyframes waterWobble{
+  0%,100%{border-radius:48% 52% 56% 44%/52% 46% 54% 48%}
+  35%{border-radius:55% 45% 46% 54%/45% 56% 44% 55%}
+  70%{border-radius:43% 57% 53% 47%/57% 43% 58% 42%}
+}
+@keyframes waterRipple{
+  0%{width:calc(var(--reveal-radius) * .72);height:calc(var(--reveal-radius) * .72);opacity:.48}
+  68%{opacity:.14}
+  100%{width:calc(var(--reveal-radius) * 2.55);height:calc(var(--reveal-radius) * 2.55);opacity:0}
+}
+@media(max-width:850px){
+  .waterPortrait{--reveal-radius:54px}
+  .touchPool{border-width:.8px}
+  .waterReveal{filter:saturate(1.04) drop-shadow(0 0 7px color-mix(in srgb,var(--accent),transparent 68%))}
+  .revealHint{font-size:8px;letter-spacing:.16em}
+}
+@media(max-width:390px){
+  .waterPortrait{--reveal-radius:48px}
+}
+@media(prefers-reduced-motion:reduce){
+  .touchPool,.waterRipples i{animation:none!important}
+}
