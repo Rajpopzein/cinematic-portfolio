@@ -960,3 +960,30 @@ body.light-mode{
 @media(max-width:820px){
   .robotReveal .robot{transform:scaleY(.9735)}
 }
+
+
+/* Blend portrait/reveal edges more naturally */
+.human{
+  filter:
+    drop-shadow(0 18px 28px rgba(0,0,0,.28))
+    blur(.12px);
+}
+.robotReveal{
+  filter:blur(.45px);
+}
+.robotReveal .robot{
+  filter:
+    brightness(calc(1 - var(--reveal) * .05))
+    saturate(1.035)
+    contrast(1.025);
+}
+
+/* The paired vector/robot assets share the same composition, so remove extra registration compression. */
+.robotReveal .robot{
+  transform:scaleY(1);
+}
+
+@media(max-width:820px){
+  .robotReveal{filter:blur(.35px)}
+  .robotReveal .robot{transform:scaleY(1)}
+}
