@@ -76,6 +76,24 @@ function App(){
      document.body.classList.remove('light-mode');
    };
  },[light]);
+
+ useEffect(()=>{
+   const items=[...document.querySelectorAll('.motion-item')];
+   if(!('IntersectionObserver' in window)){
+     items.forEach(el=>el.classList.add('in-view'));
+     return;
+   }
+   const observer=new IntersectionObserver(entries=>{
+     entries.forEach(entry=>{
+       if(entry.isIntersecting){
+         entry.target.classList.add('in-view');
+         observer.unobserve(entry.target);
+       }
+     });
+   },{threshold:.16,rootMargin:'0px 0px -8% 0px'});
+   items.forEach(el=>observer.observe(el));
+   return()=>observer.disconnect();
+ },[]);
  const heroRef=useRef(null);
  const moveParallax=e=>{
    const el=heroRef.current;if(!el)return;
@@ -96,8 +114,41 @@ function App(){
    <RevealPortrait/>
    <aside>{skills.map(([a,b,I],n)=><a href="#work" className="skill" key={a}><span className="icon"><I/></span><span><b>{a}</b><small>{b}</small></span><em>0{n+1}</em></a>)}</aside>
   </section>
-  <section id="about" className="section"><p className="eyebrow">ABOUT</p><h3>Curious builder.<br/>Practical engineer.</h3><p>I build React frontends, Express.js and FastAPI backends, and AWS infrastructure tooling. My work includes Cognito authentication, Lambda microservices, data migration, S3 uploads, DynamoDB, API Gateway and Azure Functions.</p></section>
-  <section id="work" className="section"><p className="eyebrow">SELECTED WORK</p><h3>Projects & systems.</h3><div className="projects"><article><small>PYTHON · AWS LAMBDA</small><h4>VIDA</h4><p>Microservice APIs using Lambda, API Gateway and S3, including CSV-to-JSON migration into DynamoDB and multipart large-file uploads.</p></article><article><small>REACT · EXPRESS.JS</small><h4>Team Management</h4><p>HR portal for employee work progress, queries, leave and work-hour tracking, with Cognito authentication, Redux Toolkit and Material UI.</p></article><article><small>FASTAPI · PYTHON · BOTO3</small><h4>AWS Infrastructure Portal</h4><p>APIs for AWS infrastructure management, including EC2, IAM, Slack integration and YAML generation for DevOps workflows.</p></article><article><small>PYTHON · BEAUTIFULSOUP</small><h4>TTDC Bot</h4><p>API that fetches webpage data and structures the extracted information as JSON.</p></article><article><small>FASTAPI · AZURE</small><h4>HelloHalfred</h4><p>Patient and doctor CRUD APIs deployed with Azure Functions and integrated with Azure SQL Database.</p></article></div></section>
+  <section id="about" className="section aboutSection">
+   <div className="aboutLayout">
+    <div className="aboutCopy motion-item">
+     <p className="eyebrow">ABOUT</p>
+     <h3>Curious builder.<br/>Practical engineer.</h3>
+     <p>I build React frontends, Express.js and FastAPI backends, and AWS infrastructure tooling. My work includes Cognito authentication, Lambda microservices, data migration, S3 uploads, DynamoDB, API Gateway and Azure Functions.</p>
+    </div>
+    <div className="aboutPanel">
+     <div className="metricGrid">
+      <article className="metricCard motion-item" style={{'--delay':'60ms'}}><Code2/><strong>5+</strong><span>PROJECTS BUILT</span></article>
+      <article className="metricCard motion-item" style={{'--delay':'120ms'}}><Cloud/><strong>AWS</strong><span>CLOUD EXPERIENCE</span></article>
+      <article className="metricCard motion-item" style={{'--delay':'180ms'}}><BrainCircuit/><strong>Full-stack</strong><span>REACT · NODE · PYTHON · FASTAPI</span></article>
+      <article className="metricCard motion-item" style={{'--delay':'240ms'}}><Cog/><strong>Real-world</strong><span>DATA · APIS · INFRASTRUCTURE</span></article>
+     </div>
+     <div className="toolsCard motion-item" style={{'--delay':'300ms'}}>
+      <p className="eyebrow">TOOLS & TECHNOLOGIES</p>
+      <div className="toolChips">{['React','JavaScript','Node.js','FastAPI','AWS','Python','DynamoDB','Azure','Docker','CI/CD'].map((tool,i)=><span key={tool} style={{'--chip-delay':`${i*45}ms`}}>{tool}</span>)}</div>
+     </div>
+    </div>
+   </div>
+  </section>
+  <section id="work" className="section workSection">
+   <div className="workIntro motion-item">
+    <div><p className="eyebrow">SELECTED WORK</p><h3>Projects & systems.</h3></div>
+    <p>A selection of recent projects spanning web apps, backend services, and cloud infrastructure.</p>
+    <a className="workLink" href="https://github.com/Rajpopzein" target="_blank" rel="noreferrer">View all projects <ArrowRight/></a>
+   </div>
+   <div className="projects">
+    <article className="motion-item" style={{'--delay':'60ms'}}><small>PYTHON · AWS LAMBDA</small><h4>VIDA</h4><p>Microservice APIs using Lambda, API Gateway and S3, including CSV-to-JSON migration into DynamoDB and multipart large-file uploads.</p></article>
+    <article className="motion-item" style={{'--delay':'120ms'}}><small>REACT · EXPRESS.JS</small><h4>Team Management</h4><p>HR portal for employee work progress, queries, leave and work-hour tracking, with Cognito authentication, Redux Toolkit and Material UI.</p></article>
+    <article className="motion-item" style={{'--delay':'180ms'}}><small>FASTAPI · PYTHON · BOTO3</small><h4>AWS Infrastructure Portal</h4><p>APIs for AWS infrastructure management, including EC2, IAM, Slack integration and YAML generation for DevOps workflows.</p></article>
+    <article className="motion-item" style={{'--delay':'240ms'}}><small>PYTHON · BEAUTIFULSOUP</small><h4>TTDC Bot</h4><p>API that fetches webpage data and structures the extracted information as JSON.</p></article>
+    <article className="motion-item" style={{'--delay':'300ms'}}><small>FASTAPI · AZURE</small><h4>HelloHalfred</h4><p>Patient and doctor CRUD APIs deployed with Azure Functions and integrated with Azure SQL Database.</p></article>
+   </div>
+  </section>
   <footer id="contact"><h3>Let's build something useful.</h3><p><a href="mailto:rajkumarrbtech@hotmail.com">rajkumarrbtech@hotmail.com</a> · <a href="https://github.com/Rajpopzein">GitHub</a> · <a href="https://www.linkedin.com/in/raj-kumar-39b403160">LinkedIn</a></p><p>RAJKUMAR © 2026</p></footer>
  </main>
 }
