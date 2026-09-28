@@ -65,6 +65,14 @@ function RevealPortrait(){
 
 function App(){
  const[light,setLight]=useState(false);
+ useEffect(()=>{
+   document.documentElement.classList.toggle('light-mode',light);
+   document.body.classList.toggle('light-mode',light);
+   return()=>{
+     document.documentElement.classList.remove('light-mode');
+     document.body.classList.remove('light-mode');
+   };
+ },[light]);
  const heroRef=useRef(null);
  const moveParallax=e=>{
    const el=heroRef.current;if(!el)return;
