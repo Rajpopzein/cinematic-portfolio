@@ -59,7 +59,7 @@ function RevealPortrait(){
    <div className="waterCavity" aria-hidden="true"><i className="cavityShade"/><i className="cavityHighlight"/></div>
    <div className="touchPool" aria-hidden="true"/>
    <div className="waterRipples" aria-hidden="true"><i/><i/></div>
-   <span className="revealHint">TOUCH THE SURFACE</span>
+   <span className="revealHint">PRESS / DRAG TO REVEAL</span>
  </div>
 }
 
