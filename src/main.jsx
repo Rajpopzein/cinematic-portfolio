@@ -1,4 +1,4 @@
-import React,{useRef,useState} from 'react';
+import React,{useEffect,useRef,useState} from 'react';
 import{createRoot}from'react-dom/client';
 import{ArrowRight,Menu,Sun,Moon,Code2,Cloud,BrainCircuit,Cog}from'lucide-react';
 import'./styles.css';
@@ -12,15 +12,53 @@ const skills=[
 
 function RevealPortrait(){
  const ref=useRef(null);
- const [p,setP]=useState({x:72,y:42,active:false});
- const move=e=>{const r=ref.current.getBoundingClientRect();const t=e.touches?.[0]||e;setP({x:(t.clientX-r.left)/r.width*100,y:(t.clientY-r.top)/r.height*100,active:true})};
- const vars={'--x':p.x+'%','--y':p.y+'%','--scale':p.active?1:0};
- return <div ref={ref} className="portrait" onMouseMove={move} onMouseLeave={()=>setP(v=>({...v,active:false}))} onTouchStart={move} onTouchMove={move}>
+ const target=useRef({x:72,y:42,a:0});
+ const current=useRef({x:72,y:42,a:0});
+
+ useEffect(()=>{
+   let raf;
+   const tick=()=>{
+     const el=ref.current;
+     if(el){
+       current.current.x+=(target.current.x-current.current.x)*.13;
+       current.current.y+=(target.current.y-current.current.y)*.13;
+       current.current.a+=(target.current.a-current.current.a)*.18;
+       el.style.setProperty('--x',current.current.x.toFixed(2)+'%');
+       el.style.setProperty('--y',current.current.y.toFixed(2)+'%');
+       el.style.setProperty('--reveal',current.current.a.toFixed(3));
+     }
+     raf=requestAnimationFrame(tick);
+   };
+   raf=requestAnimationFrame(tick);
+   return()=>cancelAnimationFrame(raf);
+ },[]);
+
+ const move=e=>{
+   const el=ref.current;if(!el)return;
+   const r=el.getBoundingClientRect();
+   target.current.x=Math.max(0,Math.min(100,((e.clientX-r.left)/r.width)*100));
+   target.current.y=Math.max(0,Math.min(100,((e.clientY-r.top)/r.height)*100));
+   target.current.a=1;
+ };
+ const leave=()=>{target.current.a=0};
+ const pointerUp=e=>{if(e.pointerType==='touch'||e.pointerType==='pen')leave()};
+
+ return <div
+   ref={ref}
+   className="portrait waterPortrait"
+   style={{'--x':'72%','--y':'42%','--reveal':0}}
+   onPointerMove={move}
+   onPointerEnter={move}
+   onPointerDown={e=>{e.currentTarget.setPointerCapture?.(e.pointerId);move(e)}}
+   onPointerUp={pointerUp}
+   onPointerCancel={leave}
+   onPointerLeave={leave}
+ >
    <img className="human" src="/images/human-placeholder.svg" alt="Rajkumar"/>
-   <img className="robot" src="/images/robot-placeholder.svg" alt="" style={vars}/>
-   <div className="liquidEdge" style={vars}/>
-   <div className="liquidDroplet d1" style={vars}/><div className="liquidDroplet d2" style={vars}/><div className="liquidDroplet d3" style={vars}/>
-   <span className="revealHint">MOVE / DRAG TO REVEAL</span>
+   <img className="robot waterReveal" src="/images/robot-placeholder.svg" alt="" aria-hidden="true"/>
+   <div className="touchPool" aria-hidden="true"/>
+   <div className="waterRipples" aria-hidden="true"><i/><i/></div>
+   <span className="revealHint">TOUCH THE SURFACE</span>
  </div>
 }
 
