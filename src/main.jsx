@@ -26,6 +26,7 @@ function RevealPortrait(){
        el.style.setProperty('--x',current.current.x.toFixed(2)+'%');
        el.style.setProperty('--y',current.current.y.toFixed(2)+'%');
        el.style.setProperty('--reveal',current.current.a.toFixed(3));
+       el.classList.toggle('is-revealing',current.current.a>.025||target.current.a>.025);
      }
      raf=requestAnimationFrame(tick);
    };
