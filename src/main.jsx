@@ -26,9 +26,22 @@ function RevealPortrait(){
 
 function App(){
  const[light,setLight]=useState(false);
+ const heroRef=useRef(null);
+ const moveParallax=e=>{
+   const el=heroRef.current;if(!el)return;
+   const r=el.getBoundingClientRect();
+   const x=Math.max(-1,Math.min(1,((e.clientX-r.left)/r.width-.5)*2));
+   const y=Math.max(-1,Math.min(1,((e.clientY-r.top)/r.height-.5)*2));
+   el.style.setProperty('--px',x.toFixed(3));
+   el.style.setProperty('--py',y.toFixed(3));
+ };
+ const resetParallax=()=>{
+   const el=heroRef.current;if(!el)return;
+   el.style.setProperty('--px','0');el.style.setProperty('--py','0');
+ };
  return <main className={light?'site light':'site'}>
   <header><a className="brand" href="#"><b>R</b><span>RAJKUMAR</span></a><nav><a href="#about">About</a><a href="#work">Work</a><a href="#experiments">Experiments</a><a href="#contact">Contact</a></nav><div className="headActions"><button className="theme" onClick={()=>setLight(!light)} aria-label="Toggle theme">{light?<Moon/>:<Sun/>}</button><a className="connect" href="#contact">Let's Connect <ArrowRight/></a><Menu className="menu"/></div></header>
-  <section className="hero">
+  <section ref={heroRef} className="hero" onPointerMove={moveParallax} onPointerLeave={resetParallax}>
    <div className="copy"><p className="eyebrow">HI, I'M</p><h1>RAJKUMAR</h1><h2>SOFTWARE DEVELOPER</h2><p className="intro">Software developer building React applications, backend APIs and AWS cloud solutions with Python, FastAPI and Express.js.</p><div className="cta"><a href="#work">View My Work <ArrowRight/></a><a className="ghost" href="#about">About Me</a></div><div className="stats"><div><b>React</b><span>Frontend</span></div><div><b>Python</b><span>Backend</span></div><div><b>AWS</b><span>Cloud</span></div><div><b>FastAPI</b><span>APIs</span></div></div></div>
    <RevealPortrait/>
    <aside>{skills.map(([a,b,I],n)=><a href="#work" className="skill" key={a}><span className="icon"><I/></span><span><b>{a}</b><small>{b}</small></span><em>0{n+1}</em></a>)}</aside>
