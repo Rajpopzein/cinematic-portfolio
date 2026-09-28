@@ -1,4 +1,4 @@
-import React,{useEffect,useRef,useState} from 'react';
+import React,{useRef,useState} from 'react';
 import{createRoot}from'react-dom/client';
 import{ArrowRight,Menu,Sun,Moon,Code2,Cloud,BrainCircuit,Cog}from'lucide-react';
 import'./styles.css';
@@ -26,9 +26,7 @@ function RevealPortrait(){
 
 function App(){
  const[light,setLight]=useState(false);
- const[loading,setLoading]=useState(true);
- useEffect(()=>{const t=setTimeout(()=>setLoading(false),1500);return()=>clearTimeout(t)},[]);
- return <><div className={loading?'loader':'loader loaderDone'}><div className="loaderMark">R</div><div className="loaderLine"><i/></div><span>RAJKUMAR</span></div><main className={light?'site light':'site'}>
+ return <main className={light?'site light':'site'}>
   <header><a className="brand" href="#"><b>R</b><span>RAJKUMAR</span></a><nav><a href="#about">About</a><a href="#work">Work</a><a href="#experiments">Experiments</a><a href="#contact">Contact</a></nav><div className="headActions"><button className="theme" onClick={()=>setLight(!light)} aria-label="Toggle theme">{light?<Moon/>:<Sun/>}</button><a className="connect" href="#contact">Let's Connect <ArrowRight/></a><Menu className="menu"/></div></header>
   <section className="hero">
    <div className="copy"><p className="eyebrow">HI, I'M</p><h1>RAJKUMAR</h1><h2>SOFTWARE DEVELOPER</h2><p className="intro">Software developer building React applications, backend APIs and AWS cloud solutions with Python, FastAPI and Express.js.</p><div className="cta"><a href="#work">View My Work <ArrowRight/></a><a className="ghost" href="#about">About Me</a></div><div className="stats"><div><b>React</b><span>Frontend</span></div><div><b>Python</b><span>Backend</span></div><div><b>AWS</b><span>Cloud</span></div><div><b>FastAPI</b><span>APIs</span></div></div></div>
@@ -38,6 +36,6 @@ function App(){
   <section id="about" className="section"><p className="eyebrow">ABOUT</p><h3>Curious builder.<br/>Practical engineer.</h3><p>I build React frontends, Express.js and FastAPI backends, and AWS infrastructure tooling. My work includes Cognito authentication, Lambda microservices, data migration, S3 uploads, DynamoDB, API Gateway and Azure Functions.</p></section>
   <section id="work" className="section"><p className="eyebrow">SELECTED WORK</p><h3>Projects & systems.</h3><div className="projects"><article><small>PYTHON · AWS LAMBDA</small><h4>VIDA</h4><p>Microservice APIs using Lambda, API Gateway and S3, including CSV-to-JSON migration into DynamoDB and multipart large-file uploads.</p></article><article><small>REACT · EXPRESS.JS</small><h4>Team Management</h4><p>HR portal for employee work progress, queries, leave and work-hour tracking, with Cognito authentication, Redux Toolkit and Material UI.</p></article><article><small>FASTAPI · PYTHON · BOTO3</small><h4>AWS Infrastructure Portal</h4><p>APIs for AWS infrastructure management, including EC2, IAM, Slack integration and YAML generation for DevOps workflows.</p></article><article><small>PYTHON · BEAUTIFULSOUP</small><h4>TTDC Bot</h4><p>API that fetches webpage data and structures the extracted information as JSON.</p></article><article><small>FASTAPI · AZURE</small><h4>HelloHalfred</h4><p>Patient and doctor CRUD APIs deployed with Azure Functions and integrated with Azure SQL Database.</p></article></div></section>
   <footer id="contact"><h3>Let's build something useful.</h3><p><a href="mailto:rajkumarrbtech@hotmail.com">rajkumarrbtech@hotmail.com</a> · <a href="https://github.com/Rajpopzein">GitHub</a> · <a href="https://www.linkedin.com/in/raj-kumar-39b403160">LinkedIn</a></p><p>RAJKUMAR © 2026</p></footer>
- </main></>
+ </main>
 }
 createRoot(document.getElementById('root')).render(<App/>);
