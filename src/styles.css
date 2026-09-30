@@ -2041,3 +2041,30 @@ body.intro-active{
     height:94%;
   }
 }
+
+
+/* Keep the 2-second intro video precisely centered in the viewport. */
+.introLoader{
+  display:grid!important;
+  place-items:center!important;
+}
+.introDirectVideo{
+  position:relative!important;
+  inset:auto!important;
+  left:auto!important;
+  top:auto!important;
+  width:min(82vw,760px)!important;
+  height:auto!important;
+  max-width:82vw!important;
+  max-height:82vh!important;
+  transform:none!important;
+  object-fit:contain!important;
+  object-position:50% 50%!important;
+}
+@media(max-width:820px){
+  .introDirectVideo{
+    width:90vw!important;
+    max-width:90vw!important;
+    max-height:78vh!important;
+  }
+}
