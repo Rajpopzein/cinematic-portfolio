@@ -15,7 +15,11 @@ function IntroLoader(){
    if(finishing.current)return;
    finishing.current=true;
    setLeaving(true);
-   window.setTimeout(()=>setVisible(false),350);
+   window.setTimeout(()=>{
+     document.documentElement.classList.remove('intro-active');
+     document.body.classList.remove('intro-active');
+     setVisible(false);
+   },350);
  };
 
  useEffect(()=>{
