@@ -9,39 +9,26 @@ function IntroLoader(){
  const[leaving,setLeaving]=useState(false);
  const finishing=useRef(false);
  const videoRef=useRef(null);
+ const endAt=useRef(null);
 
  const finish=()=>{
    if(finishing.current)return;
    finishing.current=true;
    setLeaving(true);
-   window.setTimeout(()=>setVisible(false),500);
+   window.setTimeout(()=>setVisible(false),350);
  };
 
  useEffect(()=>{
    document.documentElement.classList.add('intro-active');
    document.body.classList.add('intro-active');
-
-   const video=videoRef.current;
-   const start=()=>{
-     if(!video)return;
-     video.muted=true;
-     video.defaultMuted=true;
-     video.playbackRate=.5;
-     video.defaultPlaybackRate=.5;
-     video.play().catch(()=>{});
-   };
-
-   start();
-   video?.addEventListener('canplay',start);
    return()=>{
-     video?.removeEventListener('canplay',start);
      document.documentElement.classList.remove('intro-active');
      document.body.classList.remove('intro-active');
    };
  },[]);
 
  useEffect(()=>{
-   const fallback=window.setTimeout(finish,23000);
+   const fallback=window.setTimeout(finish,3200);
    return()=>window.clearTimeout(fallback);
  },[]);
 
@@ -50,17 +37,26 @@ function IntroLoader(){
    <video
      ref={videoRef}
      className="introDirectVideo"
-     autoPlay
      muted
      playsInline
      preload="auto"
      onLoadedMetadata={e=>{
-       e.currentTarget.playbackRate=.5;
-       e.currentTarget.defaultPlaybackRate=.5;
-       e.currentTarget.play().catch(()=>{});
+       const video=e.currentTarget;
+       video.muted=true;
+       video.defaultMuted=true;
+       video.playbackRate=1;
+       video.defaultPlaybackRate=1;
+
+       const duration=Number.isFinite(video.duration)?video.duration:0;
+       const startAt=Math.max(0,(duration/2)-1);
+       endAt.current=Math.min(duration,startAt+2);
+       video.currentTime=startAt;
+       video.play().catch(()=>finish());
      }}
-     onLoadedData={e=>e.currentTarget.play().catch(()=>{})}
-     onCanPlay={e=>e.currentTarget.play().catch(()=>{})}
+     onSeeked={e=>e.currentTarget.play().catch(()=>finish())}
+     onTimeUpdate={e=>{
+       if(endAt.current!==null && e.currentTarget.currentTime>=endAt.current) finish();
+     }}
      onError={finish}
      onEnded={finish}
    >
