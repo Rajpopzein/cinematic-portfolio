@@ -18,19 +18,30 @@ function IntroLoader(){
  };
 
  useEffect(()=>{
+   document.documentElement.classList.add('intro-active');
+   document.body.classList.add('intro-active');
+
    const video=videoRef.current;
-   if(video){
+   const start=()=>{
+     if(!video)return;
      video.muted=true;
      video.defaultMuted=true;
-     const start=()=>video.play().catch(()=>{});
-     start();
-     video.addEventListener('canplay',start,{once:true});
-     return()=>video.removeEventListener('canplay',start);
-   }
+     video.playbackRate=.5;
+     video.defaultPlaybackRate=.5;
+     video.play().catch(()=>{});
+   };
+
+   start();
+   video?.addEventListener('canplay',start);
+   return()=>{
+     video?.removeEventListener('canplay',start);
+     document.documentElement.classList.remove('intro-active');
+     document.body.classList.remove('intro-active');
+   };
  },[]);
 
  useEffect(()=>{
-   const fallback=window.setTimeout(finish,22000);
+   const fallback=window.setTimeout(finish,23000);
    return()=>window.clearTimeout(fallback);
  },[]);
 
@@ -43,12 +54,17 @@ function IntroLoader(){
      muted
      playsInline
      preload="auto"
+     onLoadedMetadata={e=>{
+       e.currentTarget.playbackRate=.5;
+       e.currentTarget.defaultPlaybackRate=.5;
+       e.currentTarget.play().catch(()=>{});
+     }}
      onLoadedData={e=>e.currentTarget.play().catch(()=>{})}
      onCanPlay={e=>e.currentTarget.play().catch(()=>{})}
      onError={finish}
      onEnded={finish}
    >
-     <source src="/intro.mp4" type="video/mp4"/>
+     <source src="/intro-hq.mp4" type="video/mp4"/>
    </video>
  </div>;
 }
